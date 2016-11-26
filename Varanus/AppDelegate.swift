@@ -14,10 +14,18 @@ import IOKit
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-    var refreshInterval = 1.0
+    var useColourCoding = false
+    
+    func changeColourCoding() {
+        if useColourCoding == false {
+            useColourCoding = true
+        } else {
+            useColourCoding = false
+        }
+    }
     
     func updateSensors() {
-        var CPUTemp: Double = 0
+        var CPUTemp: Int = 0
         var fanSpeed = "Varanus"
         var couldConnectToSMC = false
         while couldConnectToSMC == false {
@@ -33,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             let code = FourCharCode(fromStaticString: "TC0F")
             let x = try SMCKit.temperature(code)
-            CPUTemp = x
+            CPUTemp = Int(x)
         } catch {
             print("Error - could not retrieve CPU temperature")
         }
@@ -41,23 +49,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         do {
             let x = try SMCKit.fanCurrentSpeed(0)
             let y = try SMCKit.fanCurrentSpeed(1)
-            var fanRPM = (x+y)/2
-            if "\(fanRPM)".characters.count < 4 {
-                fanRPM += 1000
-                fanSpeed = "\(fanRPM)"
+            fanSpeed = "\((x+y)/2)"
+            while fanSpeed.characters.count < 4 {
                 fanSpeed.insert("0", at: fanSpeed.startIndex)
-            } else {
-                fanSpeed = "\(fanRPM)"
             }
-            
         } catch {
             print("Error - could not retrieve fan speed")
         }
-        let final = "\(CPUTemp)°C | \(fanSpeed) rpm"
-        statusItem.attributedTitle = NSAttributedString(
-            string: final, attributes: [NSFontAttributeName: NSFont(name: "Menlo", size: 11) ?? NSFont.systemFont(ofSize: 13)])
+        let final = "\(CPUTemp)°C | \(fanSpeed) RPM"
+        statusItem.attributedTitle = NSAttributedString(string: final, attributes: [NSFontAttributeName: NSFont.boldSystemFont(ofSize: 12)])                        
     }
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         let refreshTimer = Timer(timeInterval: 1.5, target: self, selector: #selector(updateSensors), userInfo: nil, repeats: true)
         RunLoop.main.add(refreshTimer, forMode: RunLoopMode.defaultRunLoopMode)
