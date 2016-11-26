@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		5005F3F61DE845A100F3EB15 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005F3F51DE845A100F3EB15 /* AppDelegate.swift */; };
-		5005F3F81DE845A100F3EB15 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005F3F71DE845A100F3EB15 /* ViewController.swift */; };
 		5005F3FA1DE845A100F3EB15 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5005F3F91DE845A100F3EB15 /* Assets.xcassets */; };
 		5005F3FD1DE845A100F3EB15 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5005F3FB1DE845A100F3EB15 /* Main.storyboard */; };
 		5005F4081DE845A100F3EB15 /* VaranusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005F4071DE845A100F3EB15 /* VaranusTests.swift */; };
 		5005F4131DE845A100F3EB15 /* VaranusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005F4121DE845A100F3EB15 /* VaranusUITests.swift */; };
+		5005F4211DE84E3A00F3EB15 /* SMC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5005F4201DE84E3A00F3EB15 /* SMC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +35,6 @@
 /* Begin PBXFileReference section */
 		5005F3F21DE845A100F3EB15 /* Varanus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Varanus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005F3F51DE845A100F3EB15 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5005F3F71DE845A100F3EB15 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5005F3F91DE845A100F3EB15 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5005F3FC1DE845A100F3EB15 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5005F3FE1DE845A100F3EB15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,6 +44,7 @@
 		5005F40E1DE845A100F3EB15 /* VaranusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VaranusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5005F4121DE845A100F3EB15 /* VaranusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaranusUITests.swift; sourceTree = "<group>"; };
 		5005F4141DE845A100F3EB15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5005F4201DE84E3A00F3EB15 /* SMC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SMC.swift; path = "../SMCKit-master/SMCKit/SMC.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +75,7 @@
 		5005F3E91DE845A100F3EB15 = {
 			isa = PBXGroup;
 			children = (
+				5005F4201DE84E3A00F3EB15 /* SMC.swift */,
 				5005F3F41DE845A100F3EB15 /* Varanus */,
 				5005F4061DE845A100F3EB15 /* VaranusTests */,
 				5005F4111DE845A100F3EB15 /* VaranusUITests */,
@@ -96,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				5005F3F51DE845A100F3EB15 /* AppDelegate.swift */,
-				5005F3F71DE845A100F3EB15 /* ViewController.swift */,
 				5005F3F91DE845A100F3EB15 /* Assets.xcassets */,
 				5005F3FB1DE845A100F3EB15 /* Main.storyboard */,
 				5005F3FE1DE845A100F3EB15 /* Info.plist */,
@@ -258,7 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5005F3F81DE845A100F3EB15 /* ViewController.swift in Sources */,
+				5005F4211DE84E3A00F3EB15 /* SMC.swift in Sources */,
 				5005F3F61DE845A100F3EB15 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +505,7 @@
 				5005F4191DE845A100F3EB15 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5005F41A1DE845A100F3EB15 /* Build configuration list for PBXNativeTarget "VaranusTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +514,7 @@
 				5005F41C1DE845A100F3EB15 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5005F41D1DE845A100F3EB15 /* Build configuration list for PBXNativeTarget "VaranusUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +523,7 @@
 				5005F41F1DE845A100F3EB15 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
