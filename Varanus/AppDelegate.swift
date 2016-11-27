@@ -2,27 +2,16 @@
 //  AppDelegate.swift
 //  Varanus
 //
-//  Created by Vincent Liu on 25/11/16.
-//  Copyright © 2016 Vincent Liu. All rights reserved.
+//  Created by PKBeam on 25/11/16.
 //
 
 import Cocoa
 import SMCKit
-import IOKit
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     let statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-    var useColourCoding = false
-    
-    func changeColourCoding() {
-        if useColourCoding == false {
-            useColourCoding = true
-        } else {
-            useColourCoding = false
-        }
-    }
     
     func setMinimumFanspeed1200() {
         do {
@@ -58,48 +47,52 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updateSensors() {
-        var CPUTemp: Int = 0
+        var CPUTemp: Int = 00
         var fanSpeed = "Varanus"
         var couldConnectToSMC = false
         while couldConnectToSMC == false {
             do {
                 try SMCKit.open()
                 couldConnectToSMC = true
+                do {
+                    let code = FourCharCode(fromStaticString: "TC0F")
+                    let x = try SMCKit.temperature(code)
+                    CPUTemp = Int(x)
+                } catch {
+                    print("Error - could not retrieve CPU temperature")
+                }
+                
+                do {
+                    let fanCount = try SMCKit.fanCount()
+                    if fanCount == 0 {
+                        fanSpeed = "No fans"
+                    } else {
+                        var fanRPM = 0
+                        for fans in 1...fanCount {
+                            do {
+                                fanRPM += try SMCKit.fanCurrentSpeed(fans-1)
+                            } catch {
+                                print("Error - could not retrieve fan speed")
+                            }
+                        }
+                        if fanRPM == 0 {
+                            fanSpeed = "Fans off"
+                        } else {
+                            fanSpeed = "\(fanRPM/fanCount)"
+                            while fanSpeed.characters.count < 4 {
+                                fanSpeed.insert("0", at: fanSpeed.startIndex)
+                            }
+                            fanSpeed.append("RPM")
+                        }
+                    }
+                } catch {
+                    print("Error - could not retrieve fan count")
+                }
+
             } catch {
                 couldConnectToSMC = false
                 print("Error - could not open connection to SMC")
             }
-        }
-        
-        do {
-            let code = FourCharCode(fromStaticString: "TC0F")
-            let x = try SMCKit.temperature(code)
-            CPUTemp = Int(x)
-        } catch {
-            print("Error - could not retrieve CPU temperature")
-        }
-        
-        do {
-            let fanCount = try SMCKit.fanCount()
-            var fanRPM = 0
-            for fans in 1...fanCount {
-                do {
-                    fanRPM += try SMCKit.fanCurrentSpeed(fans-1)
-                } catch {
-                    print("Error - could not retrieve fan speed")
-                }
-            }
-            if fanRPM == 0 {
-                fanSpeed = "Fans Off"
-            } else {
-                fanSpeed = "\(fanRPM/fanCount)"
-                while fanSpeed.characters.count < 4 {
-                    fanSpeed.insert("0", at: fanSpeed.startIndex)
-                }
-                fanSpeed.append("RPM")
-            }
-        } catch {
-            print("Error - could not retrieve fan count")
         }
         let final = "\(CPUTemp)°C | \(fanSpeed)"
         statusItem.attributedTitle = NSAttributedString(string: final, attributes: [NSFontAttributeName: NSFont.boldSystemFont(ofSize: 12)])                        
